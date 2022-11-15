@@ -1,0 +1,86 @@
+#!/bin/bash
+
+interface (){
+    clear
+echo "=================================================================="
+echo "========================== FLOOR $floor =============================="
+echo "$NAMEb"
+echo "HP = $HPb / $HPMAXb "
+echo
+echo " $NAME"
+echo "HP = $HP / $HPMAX "
+echo
+echo "-------Option---------"
+echo "1. Attack     2. Heal"
+echo
+}
+
+start () {
+
+interface
+echo "$NAMEb protege son etage "
+read
+while [[ $HP -gt 0 ]] && [[ $HPb -gt 0 ]]; do
+    conf=0
+    interface
+    read act
+    act=${act,,}
+    while [[ $conf == 0 ]]; do
+	if [[ $act == "attack" ]] || [[ $act == 1 ]]; then
+	    HPm=$(($HPb-$STR))
+	    conf=1
+	    interface
+	    echo "vous attaquez et infliger $STR point de domages."
+	    echo 
+	    echo "====Press enter to continue====="
+	    read
+	elif [[ $act == "heal" ]] || [[ $act == 2 ]]; then
+	    echo "hp : $HP sg: $SG"
+	    HP=$(($HP+$SG))
+	    echo "hp: $HP"
+	    conf=1
+	    if [[ $HP -gt $HPMAX ]]; then
+		HP=$HPMAX
+		
+	    fi
+	    interface
+	    echo "vous recuperer la moitier de votre vie"
+	    echo
+	    echo "====Press enter to continue====="
+	    read
+	else
+	    interface
+	    echo "entré une instruction corecte ..."
+	    read act
+	    act=${act,,}
+
+	fi
+    done
+    if [[ $HPb -gt 0 ]]; then
+	interface
+	echo "$NAMEm vous attaques"
+	echo
+	HP=$(($HP-$STRb))
+	echo "Vous perdé $STRb HP"
+	echo
+	echo "====Press enter to continue====="
+	read
+    fi
+done
+
+if [[ $HPm -le 0 ]]; then
+    interface
+    echo "Vous avez vaincu $NAMEm"
+    echo
+    echo "Vous avez vaicus le Boss la tour."
+    echo
+    echo "===========YOU WIN============"
+    echo
+    echo "====Press enter to continue====="
+    read
+    floor=$(($floor+1))
+elif [[ $HP -le 0 ]]; then
+    floor=0
+fi
+}
+start

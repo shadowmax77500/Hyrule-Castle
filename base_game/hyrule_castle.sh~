@@ -1,0 +1,24 @@
+#!/bin/bash
+
+
+
+floor=1
+act=0
+
+source ~/the_hyrule_castle/base_game/players.sh
+clear
+echo "============================================================================================="
+echo "$NAME est devant la tours pour le combat final contre Ganon."
+echo "============================================================================================="
+read
+while [[ $floor -lt 10 ]] && [[ $floor -gt 0 ]]; do
+    source ~/the_hyrule_castle/base_game/enemies.sh
+    source ~/the_hyrule_castle/base_game/Fight.sh
+done
+
+if [[ $floor == 10 ]]; then
+    source FightBoos.sh
+else
+    echo "vous avez perdu"
+fi
+

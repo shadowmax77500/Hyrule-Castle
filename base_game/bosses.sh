@@ -1,0 +1,49 @@
+#!/bin/bash
+
+choose=$((1 + RANDOM % 100))
+rarity=0
+while IFS=',' read -r id name hp mp str int def res spd luck race class rare; do
+     
+    echo $chosse
+    if [[ $choose -ge 1 ]] && [[ $choose -le 50 ]] && [[ $rare -eq 1 ]]; then 
+	rarity=1
+	number=$(($number+1))
+    elif [[ $choose -ge 51 ]] && [[ $choose -le 80 ]] && [[ $rare -eq 2 ]]; then
+        rarity=2
+	number=$(($number+1))
+    elif [[ $choose -ge 81 ]] && [[ $choose -le 95 ]] && [[ $rare -eq 3 ]]; then
+	rarity=3
+	number=$(($number+1))
+    elif [[ $choose -ge 96 ]] && [[ $choose -le 99 ]] && [[ $rare -eq 4 ]]; then
+	rarity=4
+	number=$(($number+1))
+    elif [[ $choose -eq 100 ]] && [[ $rare -eq 5 ]]; then
+	rarity=5
+	number=$(($number+1))
+    fi
+done < bosses.csv
+choose=$((1 + RANDOM % $number))
+number=-1
+name=0
+echo $rarity
+while IFS=',' read -r id name hp mp str int def res spd luck race class rare; do
+    if [[ $rare -eq $rarity ]] ; then
+	number=$(($number+1))
+	if [[ $number -eq $choose ]]; then
+	    NAMEb=$name
+	    HPMAXb=$hp
+	    HPb=$hp
+	    MPb=$mp
+	    STRb=$str
+	    INTb=$int
+	    DEFb=$def
+	    RESb=$res
+	    SPDb=$spd
+	    LUCKb=$luck
+	    RACEb=$race
+	    CLASSb=$class
+	    echo $NAMEb
+	    echo $HPb
+	fi
+    fi
+done < bosses.csv
